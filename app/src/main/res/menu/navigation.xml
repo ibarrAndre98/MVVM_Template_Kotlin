@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/baseline_profile_24"
+        android:title="@string/navigation_profile" />
+
+    <item
+        android:id="@+id/navigation_movies"
+        android:icon="@drawable/baseline_movie_24"
+        android:title="@string/navigation_movies" />
+
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/baseline_location_24"
+        android:title="@string/navigation_map" />
+
+    <item
+        android:id="@+id/navigation_upload"
+        android:icon="@drawable/baseline_file_upload_24"
+        android:title="@string/navigation_upload" />
+</menu>
