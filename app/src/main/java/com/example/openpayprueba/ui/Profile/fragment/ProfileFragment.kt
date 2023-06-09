@@ -1,4 +1,4 @@
-package com.example.openpayprueba.ui.Profile
+package com.example.openpayprueba.ui.Profile.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

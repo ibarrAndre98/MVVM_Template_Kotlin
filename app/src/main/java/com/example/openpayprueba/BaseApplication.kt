@@ -5,7 +5,9 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import com.example.openpayprueba.ui.MainActivity
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class BaseApplication: Application() {
 
     override fun onCreate() {

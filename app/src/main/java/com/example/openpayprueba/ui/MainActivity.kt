@@ -7,9 +7,11 @@ import com.example.openpayprueba.R
 import com.example.openpayprueba.databinding.ActivityMainBinding
 import com.example.openpayprueba.ui.Map.MapFragment
 import com.example.openpayprueba.ui.Movies.MoviesFragment
-import com.example.openpayprueba.ui.Profile.ProfileFragment
+import com.example.openpayprueba.ui.Profile.fragment.ProfileFragment
 import com.example.openpayprueba.ui.Upload.UploadFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
