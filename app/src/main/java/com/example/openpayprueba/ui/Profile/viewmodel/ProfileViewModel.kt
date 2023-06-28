@@ -7,7 +7,7 @@ import com.example.openpayprueba.core.core.network.Result
 import com.example.openpayprueba.core.core.network.error.ErrorType
 import com.example.openpayprueba.core.core.network.error.StampsNetworkException
 import com.example.openpayprueba.core.profile.domain.ProfileUseCase
-import com.example.openpayprueba.core.profile.model.ProfileResponseModel
+import com.example.openpayprueba.core.profile.model.ProfileResults
 import com.example.openpayprueba.utils.Event
 import com.example.openpayprueba.utils.UIModel
 import com.example.openpayprueba.utils.emitUiState
@@ -23,8 +23,8 @@ class ProfileViewModel @Inject constructor(
     private val profileUseCase: ProfileUseCase
 ): ViewModel() {
 
-    private val _getPopularPeopleState = MutableLiveData<UIModel<StampsNetworkException, ProfileResponseModel>>()
-    val getPopularPeopleState: LiveData<UIModel<StampsNetworkException, ProfileResponseModel>>
+    private val _getPopularPeopleState = MutableLiveData<UIModel<StampsNetworkException, ProfileResults>>()
+    val getPopularPeopleState: LiveData<UIModel<StampsNetworkException, ProfileResults>>
         get() = _getPopularPeopleState
 
     private var currentPopularPeopleJob: Job? = null
@@ -39,17 +39,19 @@ class ProfileViewModel @Inject constructor(
     private fun getPopularPeopleData() = GlobalScope.launch(Dispatchers.Main) {
         _getPopularPeopleState.value = emitUiState(showProgress = true)
 
-        when(val popularDataResponse = profileUseCase.invoke()) {
+        when(val popularDataResponse = profileUseCase.getPopularPeopleFromApi()) {
             is Result.Success -> {
-                _getPopularPeopleState.value = emitUiState(showSuccess = Event(popularDataResponse.data))
+                profileUseCase.insertPopularPeopleDb(popularDataResponse.data.results[0])
+                _getPopularPeopleState.value = emitUiState(showSuccess = Event(popularDataResponse.data.results[0]))
             }
 
             is Result.Error -> {
                 val exception = popularDataResponse.exception
                 when(exception.getType()){
-                    ErrorType.GENERIC, ErrorType.CONNECTION -> {
-                        _getPopularPeopleState.value = emitUiState(showClientError = Event(exception))
-                    } else -> {
+                    ErrorType.CONNECTION -> {
+                        _getPopularPeopleState.value = emitUiState(showSuccess = Event(profileUseCase.getPopularPeopleFromDb()))
+                    }
+                    else -> {
                         _getPopularPeopleState.value = emitUiState(showServerError = Event(exception))
                     }
                 }

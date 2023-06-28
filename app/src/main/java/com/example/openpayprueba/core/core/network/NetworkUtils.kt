@@ -3,8 +3,7 @@ package com.example.openpayprueba.core.core.network
 import android.util.Log
 import com.example.openpayprueba.core.core.network.error.StampsErrorAdapter
 import com.example.openpayprueba.core.core.network.error.StampsNetworkException
-import java.io.IOException
-import java.lang.Exception
+import kotlin.Exception
 
 suspend fun <T: Any> safeApiCall(call: suspend () -> Result<T>, errorMessage: String): Result<T> {
     return try {
@@ -16,7 +15,7 @@ suspend fun <T: Any> safeApiCall(call: suspend () -> Result<T>, errorMessage: St
         Result.Error(
             StampsNetworkException(
                 StampsErrorAdapter()
-            .mapClientError(IOException(errorMessage, e)))
+            .mapClientError(e))
         )
     }
 }

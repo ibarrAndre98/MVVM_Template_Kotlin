@@ -76,7 +76,7 @@ class StampsErrorAdapter : HttpErrorAdapter<StampsNetworkException> {
     }
 
     //todo check internet
-    override fun mapClientError(exception: IOException): StampsNetworkException {
+    override fun mapClientError(exception: Exception): StampsNetworkException {
         Log.w(TAG, exception.message!!)
         when (exception) {
             is UnknownHostException -> {
@@ -123,7 +123,7 @@ class StampsErrorAdapter : HttpErrorAdapter<StampsNetworkException> {
 
 
 interface HttpErrorAdapter<E : Throwable> {
-    fun mapClientError(exception: IOException): E
+    fun mapClientError(exception: java.lang.Exception): E
     @Throws(IOException::class)
     fun mapServerError(errorBody: ResponseBody?): StampsNetworkException?
 }
